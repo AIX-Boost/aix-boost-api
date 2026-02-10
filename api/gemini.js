@@ -1,4 +1,15 @@
 export default async function handler(req, res) {
+  // ✅ CORS 헤더 (핵심)
+  res.setHeader("Access-Control-Allow-Origin", "https://aix-boost.github.io");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // ✅ OPTIONS 요청 처리 (이게 없어서 405 났음)
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  // POST만 허용
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
